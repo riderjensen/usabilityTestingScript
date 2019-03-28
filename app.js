@@ -1,8 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT;
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({
     extended: false,
@@ -11,6 +14,9 @@ app.use(bodyParser.urlencoded({
 
 const jsRouter = require('./routes/js.route')();
 app.use('/js', jsRouter);
+
+const replayRouter = require('./routes/replay.route')();
+app.use('/replay', replayRouter)
 
 const homeRouter = require('./routes/home.route')();
 app.use('/', homeRouter);

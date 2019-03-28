@@ -6,10 +6,10 @@ const initInformation = {
 	'windowHeight': h,
 	'windowWidth': w,
 }
+
 postData(`http://localhost:8080/js`, initInformation)
 	.then(data => console.log(JSON.stringify(data)))
-	.catch(error => console.error(error));
-
+	.catch(error => console.log(error));
 
 
 // ******************************
@@ -108,45 +108,35 @@ function usableScrolling() {
 
 setInterval(function () {
 	// start recording after modal is closed
-	if (acceptTerms) {
-		let object = screenPercents();
-		if (objectArray.length > 10) {
-			let sendObj = {
-				userID: globalCookie,
-				recMoves: objectArray,
-				page: pageID,
-				secret: secretID
-			};
-			// push testArray to the app
-			postData(`http://localhost:8080/js`, sendObj)
-				.then(data => console.log(JSON.stringify(data)))
-				.catch(error => console.error(error));
-			// empty object array and begin again
-			objectArray = [];
-		}
-		// push object to object array
-		objectArray.push(object);
+	let object = screenPercents();
+	if (objectArray.length > 10) {
+		let sendObj = {
+			recMoves: objectArray,
+		};
+		postData(`http://localhost:8080/js`, sendObj)
+			.then(data => console.log(data))
+			.catch(error => console.log(error));
+
+		// empty object array and begin again
+		objectArray = [];
 	}
+	// push object to object array
+	objectArray.push(object);
 }, 100);
 
 // get final information before page is taken away
 window.addEventListener('unload', () => {
 	let sendObj = {
-		userID: globalCookie,
 		recMoves: objectArray,
-		page: pageID,
-		secret: secretID,
 		endingScroll: window.pageYOffset
 	};
 	postData(`http://localhost:8080/js`, sendObj)
 		.then(data => console.log(JSON.stringify(data)))
-		.catch(error => console.error(error));
+		.catch(error => console.log(error));
 });
 
 
-
-
-function postData(url = ``, data = {}) {
+function postData(url, obj) {
 	return fetch(url, {
 		method: "POST",
 		mode: "cors",
@@ -154,13 +144,12 @@ function postData(url = ``, data = {}) {
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify(data),
+		body: JSON.stringify(obj),
 	})
-		.then(response => response.json());
+
 }
 
-
-let browser = function () {
+function browser() {
 	// Return cached result if avalible, else get result then cache it.
 	if (browser.prototype._cachedResult)
 		return browser.prototype._cachedResult;
