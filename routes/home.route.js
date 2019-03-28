@@ -6,6 +6,7 @@ const homeController = require('../controllers/home.controller');
 function router() {
 
     homeRouter.route('/')
+        .post(homeController.generate)
         .get(homeController.index);
 
     return homeRouter;
