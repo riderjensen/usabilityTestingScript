@@ -31,13 +31,13 @@ exports.postInit = (req, res, next) => {
 exports.addTracking = (req, res, next) => {
 	const id = req.params.id;
 	const data = req.body;
-	console.log(data)
-	UseTrackModel.findById(id).then(item => {
-		if (item.recMoves) {
-			item.recMoves = item.recMoves.concat(data.recMoves)
-		} else {
-			item.recMoves = [...data.recMoves]
+	UseTrackModel.findByIdAndUpdate(id, {
+		"$push": {
+			'recMoves': {
+				$each: data.recMoves
+			}
 		}
-		item.save();
-	})
+	}, (err, item) => res.status(201).send({
+		message: "Items have been added"
+	}))
 }

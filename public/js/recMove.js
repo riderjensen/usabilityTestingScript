@@ -2,6 +2,10 @@ const w = window.innerWidth;
 const h = window.innerHeight;
 const body = document.getElementsByTagName('body')[0]
 
+let x, y;
+let objectArray = [];
+let scrollOnPage = 0;
+
 const initInformation = {
 	'browserType': browser(),
 	'windowHeight': h,
@@ -15,15 +19,6 @@ postData(`http://localhost:8080/js`, initInformation)
 	.then(data => {
 		const RETURNED_ID = data.id;
 
-		// ******************************
-		// ****** Tracking Section ******
-		// ******************************
-
-
-		let x, y;
-		let objectArray = [];
-		let scrollOnPage = 0;
-
 		// these are our event listeners for things we want to track
 		window.addEventListener("scroll", usableScrolling);
 		window.addEventListener("blur", usableBlur);
@@ -32,92 +27,16 @@ postData(`http://localhost:8080/js`, initInformation)
 		body.addEventListener("mousemove", usableShowCoords);
 
 
-		// changing the x/y coords anytime that the mouse is moved
-		function usableShowCoords(event) {
-			x = event.clientX;
-			y = event.clientY;
-		}
-		// getting the x and y position in a percentage and returning the obj to the req
-		function screenPercents() {
-			return object = {
-				x: Math.round((x / w) * 10000) / 100,
-				y: Math.round((y / h) * 10000) / 100
-			}
-		}
-
-
-		// ****** Blur ******
-
-		function usableBlur() {
-			if (objectArray[objectArray.length - 1] != undefined) {
-				objectArray[objectArray.length - 1].ev = 'blur';
-			}
-		}
-		// ****** Focus ******
-
-		function usableFocus() {
-			if (objectArray[objectArray.length - 1] != undefined) {
-				objectArray[objectArray.length - 1].ev = 'focus';
-			}
-		}
-
-		// ****** Click ******
-
-		function usableClicked() {
-			// setting event to clicked on the current arrayObj
-			if (objectArray[objectArray.length - 1] != undefined) {
-				objectArray[objectArray.length - 1].ev = 'clicked';
-			}
-		}
-
-		// ****** Scroll ******
-
-		let doneOnce = false;
-		let scrollSeconds;
-		let myTimeout;
-		let startScroll;
-
-		function usableScrolling() {
-			if (!doneOnce) {
-				doneOnce = true;
-				startScroll = document.documentElement.scrollTop;
-				let scrollObj = {
-					type: 'start',
-					// where we started scrolling
-					sScroll: scrollOnPage
-				}
-				// setting event to object on the scroll event
-				if (objectArray[objectArray.length - 1] != undefined) {
-					objectArray[objectArray.length - 1].ev = scrollObj;
-				}
-			}
-
-			// wait a half of a second before resetting so that we can get a new scroll time
-			clearTimeout(myTimeout);
-			myTimeout = setTimeout(function () {
-				doneOnce = false;
-				scrollOnPage = document.documentElement.scrollTop;
-				let scrollObj = {
-					type: 'end',
-					// where we ended scrolling
-					eScroll: scrollOnPage
-				}
-				// setting event to object on the scroll event
-				objectArray[objectArray.length - 1].ev = scrollObj;
-			}, 100);
-		}
-
 		// ****** Mouse Moves ******
 
 		setInterval(function () {
-			// start recording after modal is closed
 			let object = screenPercents();
-			if (objectArray.length > 10) {
+			if (objectArray.length > 100) {
 				let sendObj = {
 					recMoves: objectArray,
 				};
 				postData(`http://localhost:8080/js/${RETURNED_ID}`, sendObj)
-					.then(data => console.log(data))
+					.then(_ => console.log('posted something for regular'))
 					.catch(error => console.log(error));
 
 				// empty object array and begin again
@@ -134,7 +53,7 @@ postData(`http://localhost:8080/js`, initInformation)
 				endingScroll: window.pageYOffset
 			};
 			postData(`http://localhost:8080/js/${RETURNED_ID}`, sendObj)
-				.then(data => console.log(data))
+				.then(_ => console.log('posted something for unload'))
 				.catch(error => console.log(error));
 		});
 
@@ -191,3 +110,78 @@ function browser() {
 							isEdge ? 'Edge' :
 								"Don't know";
 };
+
+// changing the x/y coords anytime that the mouse is moved
+function usableShowCoords(event) {
+	x = event.clientX;
+	y = event.clientY;
+}
+// getting the x and y position in a percentage and returning the obj to the req
+function screenPercents() {
+	return object = {
+		x: Math.round((x / w) * 10000) / 100,
+		y: Math.round((y / h) * 10000) / 100
+	}
+}
+
+
+// ****** Blur ******
+
+function usableBlur() {
+	if (objectArray[objectArray.length - 1] != undefined) {
+		objectArray[objectArray.length - 1].ev = 'blur';
+	}
+}
+// ****** Focus ******
+
+function usableFocus() {
+	if (objectArray[objectArray.length - 1] != undefined) {
+		objectArray[objectArray.length - 1].ev = 'focus';
+	}
+}
+
+// ****** Click ******
+
+function usableClicked() {
+	// setting event to clicked on the current arrayObj
+	if (objectArray[objectArray.length - 1] != undefined) {
+		objectArray[objectArray.length - 1].ev = 'clicked';
+	}
+}
+
+// ****** Scroll ******
+
+let doneOnce = false;
+let scrollSeconds;
+let myTimeout;
+let startScroll;
+
+function usableScrolling() {
+	if (!doneOnce) {
+		doneOnce = true;
+		startScroll = document.documentElement.scrollTop;
+		let scrollObj = {
+			type: 'start',
+			// where we started scrolling
+			sScroll: scrollOnPage
+		}
+		// setting event to object on the scroll event
+		if (objectArray[objectArray.length - 1] != undefined) {
+			objectArray[objectArray.length - 1].ev = scrollObj;
+		}
+	}
+
+	// wait a half of a second before resetting so that we can get a new scroll time
+	clearTimeout(myTimeout);
+	myTimeout = setTimeout(function () {
+		doneOnce = false;
+		scrollOnPage = document.documentElement.scrollTop;
+		let scrollObj = {
+			type: 'end',
+			// where we ended scrolling
+			eScroll: scrollOnPage
+		}
+		// setting event to object on the scroll event
+		objectArray[objectArray.length - 1].ev = scrollObj;
+	}, 100);
+}
