@@ -5,7 +5,8 @@ const initInformation = {
 	'browserType': browser(),
 	'windowHeight': h,
 	'windowWidth': w,
-	'overallId': document.getElementById('usable').outerHTML.split('?id=')[1].split('"')[0]
+	'overallId': document.getElementById('usable').outerHTML.split('?id=')[1].split('"')[0],
+	'url': window.location.href
 }
 
 postData(`http://localhost:8080/js`, initInformation)

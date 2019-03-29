@@ -21,5 +21,4 @@ exports.findingOneTest = (req, res, next) => {
             })
         })
         .catch(err => console.log(err));
-    // pull one ID and return something that replays the information
 }
