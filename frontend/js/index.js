@@ -8,7 +8,7 @@ genButton.addEventListener('click', () => {
 		cache: "no-cache",
 	}).then(response => response.json())
 		.then(resp => {
-			genInput.value = `<script src="${resp.url}"></script>`;
+			genInput.value = `<script src="${resp.url}" id="usable"></script>`;
 			genInput.addEventListener('click', () => {
 				genInput.select();
 				document.execCommand("copy");

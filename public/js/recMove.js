@@ -1,5 +1,6 @@
 const w = window.innerWidth;
 const h = window.innerHeight;
+const body = document.getElementsByTagName('body')[0]
 
 const initInformation = {
 	'browserType': browser(),
@@ -8,6 +9,7 @@ const initInformation = {
 	'overallId': document.getElementById('usable').outerHTML.split('?id=')[1].split('"')[0],
 	'url': window.location.href
 }
+
 
 postData(`http://localhost:8080/js`, initInformation)
 	.then(data => {
@@ -24,10 +26,10 @@ postData(`http://localhost:8080/js`, initInformation)
 
 		// these are our event listeners for things we want to track
 		window.addEventListener("scroll", usableScrolling);
-		window.addEventListener("blur", usabelBlur);
-		window.addEventListener("focus", usabelFocus);
-		document.getElementById("usableBody").addEventListener("mouseup", usabelClicked);
-		document.getElementById("usableBody").addEventListener("mousemove", usableShowCoords);
+		window.addEventListener("blur", usableBlur);
+		window.addEventListener("focus", usableFocus);
+		body.addEventListener("mouseup", usableClicked);
+		body.addEventListener("mousemove", usableShowCoords);
 
 
 		// changing the x/y coords anytime that the mouse is moved
@@ -46,14 +48,14 @@ postData(`http://localhost:8080/js`, initInformation)
 
 		// ****** Blur ******
 
-		function usabelBlur() {
+		function usableBlur() {
 			if (objectArray[objectArray.length - 1] != undefined) {
 				objectArray[objectArray.length - 1].ev = 'blur';
 			}
 		}
 		// ****** Focus ******
 
-		function usabelFocus() {
+		function usableFocus() {
 			if (objectArray[objectArray.length - 1] != undefined) {
 				objectArray[objectArray.length - 1].ev = 'focus';
 			}
@@ -61,7 +63,7 @@ postData(`http://localhost:8080/js`, initInformation)
 
 		// ****** Click ******
 
-		function usabelClicked() {
+		function usableClicked() {
 			// setting event to clicked on the current arrayObj
 			if (objectArray[objectArray.length - 1] != undefined) {
 				objectArray[objectArray.length - 1].ev = 'clicked';
