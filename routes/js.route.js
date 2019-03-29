@@ -6,8 +6,11 @@ const jsController = require('../controllers/js.controller');
 
 function router() {
 
+    jsRouter.route('/:id')
+        .post(jsController.addTracking);
+
     jsRouter.route('/')
-        .post(jsController.postIndex)
+        .post(jsController.postInit)
         .get(jsController.index);
 
     return jsRouter;
