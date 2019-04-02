@@ -1,9 +1,15 @@
-const usableURL = 'http://localhost:8008/replay/findOne/'
+const usableURL = 'http://localhost:8080/replay/findOne/'
 
 // creating pointer and clicker
 const usableBody = document.getElementsByTagName('body')[0];
 
-console.log(usableBody);
+function createScript(theURL) {
+    let ourScript = document.createElement('script');
+    ourScript.src = theURL;
+    document.getElementsByTagName("body")[0].appendChild(ourScript)
+}
+createScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/ScrollToPlugin.min.js");
+createScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js");
 
 let svg = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
 svg.setAttribute('viewBox', '0 0 186.93 295.78')
@@ -56,29 +62,12 @@ function getData(url, id) {
 
 }
 
-const theID = document.getElementById('scrimScram').innerHTML;
+const theID = document.getElementById('usableID').innerHTML;
 getData(usableURL, theID).then(item => {
-    console.log(item)
-})
 
-
-// get the moves back and go through them
-socket.on('returnMoves', (data) => {
-    let ourPreviousArray = data.prevArray.reverse();
-    ourPreviousArray.forEach((element) => {
-        let href = window.location.href.split('/');
-        let theID = href[href.length - 1].split('?')[0];
-        // working on the first one
-        if (element.pageID == theID) {
-            window.scrollTo(0, element.endingScroll)
-        }
-    })
-    let userMoves = data.moves;
+    let userMoves = item.item.recMoves;
     const pointer = document.getElementById('pointer');
-    let scrollOnPage = 0;
-    // 10 every second
-    // we need to let the user be able to modify this and change it so that they can replay at their leaisure
-    let interval = 100 / ourSpeed;
+    let interval = 100;
 
     // an array of all the positions where .ev is present. 
     // Every other occurance of .ev will be a start or a stop and therefore
@@ -89,18 +78,17 @@ socket.on('returnMoves', (data) => {
             scrollIndexArray.push(i);
         }
     });
+    let scrollOnPage = 0;
     // iterator for userMoves
     let i = -1;
     // iterator for scrolling object
     let j = 0;
     let intervalFunction = setInterval(replayFunction, interval)
-
     function replayFunction() {
         i++;
         if (i >= (userMoves.length - 1)) {
             clearInterval(intervalFunction);
-            // move us on to the next url
-            window.location.href = `${ourURL}${data.nextURL}?pagenum=${pageNum}&testID=${relatedTestId}`;
+            alert('Test is complete')
         }
         TweenLite.to('#box', 1, {
             ease: Power2.easeNone,
@@ -150,4 +138,6 @@ socket.on('returnMoves', (data) => {
 
         }
     }
-});
+})
+
+

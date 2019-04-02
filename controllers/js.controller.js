@@ -10,6 +10,15 @@ exports.index = (req, res, next) => {
     })
 }
 
+exports.replay = (req, res, next) => {
+    const options = {
+        root: './public/js/',
+    };
+    res.sendFile('replayMove.js', options, (err) => {
+        err ? console.log(err) : null
+    })
+}
+
 exports.postInit = (req, res, next) => {
     const mainId = req.body.overallId;
     const initInfo = req.body;

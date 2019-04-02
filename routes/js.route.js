@@ -7,7 +7,8 @@ const jsController = require('../controllers/js.controller');
 function router() {
 
     jsRouter.route('/:id')
-        .post(jsController.addTracking);
+        .post(jsController.addTracking)
+        .get(jsController.replay);
 
     jsRouter.route('/')
         .post(jsController.postInit)
