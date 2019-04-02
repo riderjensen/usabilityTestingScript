@@ -15,7 +15,7 @@ const initInformation = {
 }
 
 
-postData(`http://localhost:8080/js`, initInformation)
+postData(`http://165.22.130.92/js`, initInformation)
 	.then(data => {
 		const RETURNED_ID = data.id;
 
@@ -103,12 +103,12 @@ function browser() {
 
 	return browser.prototype._cachedResult =
 		isOpera ? 'Opera' :
-			isFirefox ? 'Firefox' :
-				isSafari ? 'Safari' :
-					isChrome ? 'Chrome' :
-						isIE ? 'IE' :
-							isEdge ? 'Edge' :
-								"Don't know";
+		isFirefox ? 'Firefox' :
+		isSafari ? 'Safari' :
+		isChrome ? 'Chrome' :
+		isIE ? 'IE' :
+		isEdge ? 'Edge' :
+		"Don't know";
 };
 
 // changing the x/y coords anytime that the mouse is moved

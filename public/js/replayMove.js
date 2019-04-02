@@ -1,12 +1,12 @@
-const usableURL = 'http://localhost:8080/replay/findOne/'
+const usableURL = 'http://165.22.130.92/replay/findOne/'
 
 // creating pointer and clicker
 const usableBody = document.getElementsByTagName('body')[0];
 
 function createScript(theURL) {
-    let ourScript = document.createElement('script');
-    ourScript.src = theURL;
-    document.getElementsByTagName("body")[0].appendChild(ourScript)
+	let ourScript = document.createElement('script');
+	ourScript.src = theURL;
+	document.getElementsByTagName("body")[0].appendChild(ourScript)
 }
 createScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/plugins/ScrollToPlugin.min.js");
 createScript("https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js");
@@ -37,11 +37,11 @@ svg.appendChild(createPath('cls-2', 'M77.5,218.09a125.65,125.65,0,0,1,16-.31c.11
 svg.appendChild(createPath('cls-2', 'M124.71,217.66c5.17-.24,10.35-.1,15.53.09,0,10.3-.07,20.6.13,30.91,5.12.05,10.23.11,15.35.25.12,10.39.18,20.78,0,31.17-5.12.13-10.25.26-15.37,0-.58-10.35-.1-20.73-.2-31.09-5.21-.11-10.42-.09-15.62-.13,0-10.4-.12-20.82.15-31.22Z', 'translate(0.02 -0.01)'));
 
 function createPath(ourClass, ourD, ourTransform) {
-    let ourPath = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-    ourPath.setAttribute('class', ourClass);
-    ourPath.setAttribute('d', ourD);
-    ourPath.setAttribute('transform', ourTransform);
-    return ourPath;
+	let ourPath = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+	ourPath.setAttribute('class', ourClass);
+	ourPath.setAttribute('d', ourD);
+	ourPath.setAttribute('transform', ourTransform);
+	return ourPath;
 }
 
 const pointed = document.createElement('div');
@@ -52,92 +52,91 @@ usableBody.insertAdjacentElement('afterbegin', pointed);
 
 
 function getData(url, id) {
-    return fetch(`${url}${id}`, {
-        mode: "cors",
-        cache: "no-cache",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    }).then(response => response.json())
+	return fetch(`${url}${id}`, {
+		mode: "cors",
+		cache: "no-cache",
+		headers: {
+			"Content-Type": "application/json",
+		},
+	}).then(response => response.json())
 
 }
 
 const theID = document.getElementById('usableID').innerHTML;
 getData(usableURL, theID).then(item => {
 
-    let userMoves = item.item.recMoves;
-    const pointer = document.getElementById('pointer');
-    let interval = 100;
+	let userMoves = item.item.recMoves;
+	const pointer = document.getElementById('pointer');
+	let interval = 100;
 
-    // an array of all the positions where .ev is present. 
-    // Every other occurance of .ev will be a start or a stop and therefore
-    // we can get the time between those and tween the correct amount
-    let scrollIndexArray = [];
-    userMoves.forEach((move, i) => {
-        if (typeof move.ev === "object") {
-            scrollIndexArray.push(i);
-        }
-    });
-    let scrollOnPage = 0;
-    // iterator for userMoves
-    let i = -1;
-    // iterator for scrolling object
-    let j = 0;
-    let intervalFunction = setInterval(replayFunction, interval)
-    function replayFunction() {
-        i++;
-        if (i >= (userMoves.length - 1)) {
-            clearInterval(intervalFunction);
-            alert('Test is complete')
-        }
-        TweenLite.to('#box', 1, {
-            ease: Power2.easeNone,
-            left: userMoves[i].x + '%'
-        });
-        TweenLite.to('#box', 1, {
-            ease: Power2.easeNone,
-            top: userMoves[i].y + '%'
-        });
-        if (userMoves[i].ev == "clicked") {
-            pointer.style.left = userMoves[i].x + '%';
-            pointer.style.top = userMoves[i].y + '%';
-            pointer.style.transform = `translateY(${scrollOnPage}px)`;
-        }
-        if (userMoves[i].ev == "blur") {
-            let blurDiv = document.createElement('div');
-            blurDiv.style.cssText = 'position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; background-color: rgba(0,0,0,0.8)';
-            let ourH1 = document.createElement('h1');
-            ourH1.style.cssText = 'top: 30vh; position: absolute; width: 100%; text-align: center; color: #fff; z-index: 100;';
-            ourH1.innerText = 'The user window has lost focus';
-            blurDiv.appendChild(ourH1);
-            blurDiv.id = 'ourBlurDiv';
-            usableBody.appendChild(blurDiv);
-        }
-        if (userMoves[i].ev == "focus") {
-            let checkBlurDiv = document.getElementById('ourBlurDiv');
-            if (checkBlurDiv) {
-                checkBlurDiv.parentNode.removeChild(checkBlurDiv);
-            }
-        }
-        if (typeof userMoves[i].ev === "object") {
-            let ourObject = userMoves[i].ev;
-            if (ourObject.type == 'start') {
-                let ourTime = (scrollIndexArray[j + 1] - scrollIndexArray[j]) / (interval / 10);
-                let ourObj = userMoves[scrollIndexArray[j + 1]].ev;
+	// an array of all the positions where .ev is present. 
+	// Every other occurance of .ev will be a start or a stop and therefore
+	// we can get the time between those and tween the correct amount
+	let scrollIndexArray = [];
+	userMoves.forEach((move, i) => {
+		if (typeof move.ev === "object") {
+			scrollIndexArray.push(i);
+		}
+	});
+	let scrollOnPage = 0;
+	// iterator for userMoves
+	let i = -1;
+	// iterator for scrolling object
+	let j = 0;
+	let intervalFunction = setInterval(replayFunction, interval)
 
-                scrollOnPage = ourObj.eScroll;
-                TweenLite.to(window, ourTime, {
-                    scrollTo: {
-                        y: ourObj.eScroll,
-                        x: 0
-                    },
-                    ease: Power2.easeInOut
-                });
-                j += 2;
-            }
+	function replayFunction() {
+		i++;
+		if (i >= (userMoves.length - 1)) {
+			clearInterval(intervalFunction);
+			alert('Test is complete')
+		}
+		TweenLite.to('#box', 1, {
+			ease: Power2.easeNone,
+			left: userMoves[i].x + '%'
+		});
+		TweenLite.to('#box', 1, {
+			ease: Power2.easeNone,
+			top: userMoves[i].y + '%'
+		});
+		if (userMoves[i].ev == "clicked") {
+			pointer.style.left = userMoves[i].x + '%';
+			pointer.style.top = userMoves[i].y + '%';
+			pointer.style.transform = `translateY(${scrollOnPage}px)`;
+		}
+		if (userMoves[i].ev == "blur") {
+			let blurDiv = document.createElement('div');
+			blurDiv.style.cssText = 'position: fixed; width: 100vw; height: 100vh; top: 0; left: 0; background-color: rgba(0,0,0,0.8)';
+			let ourH1 = document.createElement('h1');
+			ourH1.style.cssText = 'top: 30vh; position: absolute; width: 100%; text-align: center; color: #fff; z-index: 100;';
+			ourH1.innerText = 'The user window has lost focus';
+			blurDiv.appendChild(ourH1);
+			blurDiv.id = 'ourBlurDiv';
+			usableBody.appendChild(blurDiv);
+		}
+		if (userMoves[i].ev == "focus") {
+			let checkBlurDiv = document.getElementById('ourBlurDiv');
+			if (checkBlurDiv) {
+				checkBlurDiv.parentNode.removeChild(checkBlurDiv);
+			}
+		}
+		if (typeof userMoves[i].ev === "object") {
+			let ourObject = userMoves[i].ev;
+			if (ourObject.type == 'start') {
+				let ourTime = (scrollIndexArray[j + 1] - scrollIndexArray[j]) / (interval / 10);
+				let ourObj = userMoves[scrollIndexArray[j + 1]].ev;
 
-        }
-    }
+				scrollOnPage = ourObj.eScroll;
+				TweenLite.to(window, ourTime, {
+					scrollTo: {
+						y: ourObj.eScroll,
+						x: 0
+					},
+					ease: Power2.easeInOut
+				});
+				j += 2;
+			}
+
+		}
+	}
 })
-
-
