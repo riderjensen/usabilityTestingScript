@@ -31,7 +31,6 @@ exports.postInit = (req, res, next) => {
 exports.addTracking = (req, res, next) => {
     const id = req.params.id;
     const data = req.body;
-    console.log(data)
     UseTrackModel.findById(id).then(item => {
         if (item.recMoves) {
             item.recMoves = item.recMoves.concat(data.recMoves)
