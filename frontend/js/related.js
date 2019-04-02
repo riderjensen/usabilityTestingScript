@@ -17,7 +17,7 @@ genButton.addEventListener('click', () => {
 			let textGen = `<p>A total of ${resp.tests.length} tests have been generated. More information can be found here:</p>
 				<textarea style="width: 500px;">
 					<span id="usableID">{YOUR ID HERE}</span>
-					<script src="http://localhost:8080/js/replay"></script>
+					<script src="http://165.22.130.92/js/replay"></script>
 				</textarea>
 			<ul>`;
 			for (let i = 0; i < resp.tests.length; i++) {

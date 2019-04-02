@@ -1,4 +1,4 @@
-const usableURL = 'http://165.22.130.92/replay/findOne/'
+const usableURL = 'http://165.22.130.92'
 
 // creating pointer and clicker
 const usableBody = document.getElementsByTagName('body')[0];
@@ -63,7 +63,7 @@ function getData(url, id) {
 }
 
 const theID = document.getElementById('usableID').innerHTML;
-getData(usableURL, theID).then(item => {
+getData(`${usableURL}/replay/findOne/`, theID).then(item => {
 
 	let userMoves = item.item.recMoves;
 	const pointer = document.getElementById('pointer');

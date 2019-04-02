@@ -1,6 +1,7 @@
 const w = window.innerWidth;
 const h = window.innerHeight;
-const body = document.getElementsByTagName('body')[0]
+const body = document.getElementsByTagName('body')[0];
+const USABLE_URL = 'http://165.22.130.92';
 
 let x, y;
 let objectArray = [];
@@ -15,7 +16,7 @@ const initInformation = {
 }
 
 
-postData(`http://165.22.130.92/js`, initInformation)
+postData(`${USABLE_URL}/js`, initInformation)
 	.then(data => {
 		const RETURNED_ID = data.id;
 
@@ -35,7 +36,7 @@ postData(`http://165.22.130.92/js`, initInformation)
 				let sendObj = {
 					recMoves: objectArray,
 				};
-				postData(`http://localhost:8080/js/${RETURNED_ID}`, sendObj)
+				postData(`${USABLE_URL}/js/${RETURNED_ID}`, sendObj)
 					.then(_ => console.log('posted something for regular'))
 					.catch(error => console.log(error));
 
@@ -52,7 +53,7 @@ postData(`http://165.22.130.92/js`, initInformation)
 				recMoves: objectArray,
 				endingScroll: window.pageYOffset
 			};
-			postData(`http://localhost:8080/js/${RETURNED_ID}`, sendObj)
+			postData(`${USABLE_URL}/js/${RETURNED_ID}`, sendObj)
 				.then(_ => console.log('posted something for unload'))
 				.catch(error => console.log(error));
 		});
