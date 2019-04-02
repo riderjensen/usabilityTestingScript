@@ -24,7 +24,7 @@ app.use('/replay', replayRouter)
 const homeRouter = require('./routes/home.route')();
 app.use('/', homeRouter);
 
-mongoose.connect('mongodb://localhost:27017/usabilityTestingScript', {
+mongoose.connect('mongodb+srv://scrimscram:12345678Ah!@nodecourse-zfafv.mongodb.net/usabilityTestingScript?retryWrites=true', {
 	useNewUrlParser: true
 }).then(_ => {
 	app.listen(PORT, () => console.log(`App is running on ${PORT}`));
