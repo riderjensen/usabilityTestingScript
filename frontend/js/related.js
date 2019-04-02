@@ -7,7 +7,7 @@ const returnInfo = document.getElementById('returnInfo');
 
 genButton.addEventListener('click', () => {
 	// check to make sure item is not empty here THEN
-	fetch(`http://localhost:8080/replay/${genInput.value}`, {
+	fetch(`http://165.22.130.92/replay/${genInput.value}`, {
 			method: "GET",
 			mode: "cors",
 			cache: "no-cache",
