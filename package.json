@@ -1,42 +1,42 @@
 {
-  "name": "usabilitytestingscript",
-  "version": "1.0.0",
-  "description": "Usability Testing but in script form",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/riderjensen/usabilityTestingScript.git"
-  },
-  "author": "Rider Jensen",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/riderjensen/usabilityTestingScript/issues"
-  },
-  "homepage": "https://github.com/riderjensen/usabilityTestingScript#readme",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.5",
-    "express": "^4.16.4",
-    "mongoose": "^5.4.20",
-    "shortid": "^2.2.14"
-  },
-  "nodemonConfig": {
-    "restartable": "rs",
-    "ignore": [
-      "node_modules/**/node_modules"
-    ],
-    "delay": "2500",
-    "env": {
-      "NODE_ENV": "development",
-      "PORT": 8080,
-      "ADDR": "http://localhost:8080"
-    }
-  },
-  "devDependencies": {
-    "nodemon": "^1.18.10"
-  }
+	"name": "usabilitytestingscript",
+	"version": "1.0.0",
+	"description": "Usability Testing but in script form",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon app.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/riderjensen/usabilityTestingScript.git"
+	},
+	"author": "Rider Jensen",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/riderjensen/usabilityTestingScript/issues"
+	},
+	"homepage": "https://github.com/riderjensen/usabilityTestingScript#readme",
+	"dependencies": {
+		"body-parser": "^1.18.3",
+		"cors": "^2.8.5",
+		"express": "^4.16.4",
+		"mongoose": "^5.4.20",
+		"shortid": "^2.2.14"
+	},
+	"nodemonConfig": {
+		"restartable": "rs",
+		"ignore": [
+			"node_modules/**/node_modules"
+		],
+		"delay": "2500",
+		"env": {
+			"NODE_ENV": "development",
+			"PORT": 8080,
+			"ADDR": "http://localhost:8080"
+		}
+	},
+	"devDependencies": {
+		"nodemon": "^1.18.10"
+	}
 }

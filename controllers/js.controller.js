@@ -3,7 +3,7 @@ const WebsiteStorageModel = require('../models/websiteStorage.model');
 
 exports.index = (req, res, next) => {
     const options = {
-        root: './public/',
+        root: './public/js/',
     };
     res.sendFile('recMove.js', options, (err) => {
         err ? console.log(err) : null
@@ -31,12 +31,13 @@ exports.postInit = (req, res, next) => {
 exports.addTracking = (req, res, next) => {
     const id = req.params.id;
     const data = req.body;
-    UseTrackModel.findById(id).then(item => {
-        if (item.recMoves) {
-            item.recMoves = item.recMoves.concat(data.recMoves)
-        } else {
-            item.recMoves = [...data.recMoves]
+    UseTrackModel.findByIdAndUpdate(id, {
+        "$push": {
+            'recMoves': {
+                $each: data.recMoves
+            }
         }
-        item.save();
-    })
+    }, (err, item) => res.status(201).send({
+        message: "Items have been added"
+    }))
 }
