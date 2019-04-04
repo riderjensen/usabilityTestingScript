@@ -542,3 +542,12 @@ p#passwordReqs {
 .text-black {
   color: #000;
 }
+
+*::selection {
+  background: #42dca3; /* WebKit/Blink Browsers */
+  color: #000;
+}
+*::-moz-selection {
+  background: #42dca3; /* Gecko Browsers */
+  color: #000;
+}
