@@ -18,7 +18,11 @@ const initInformation = {
 
 postData(`${USABLE_URL}/js`, initInformation)
 	.then(data => {
+		console.log(data)
 		const RETURNED_ID = data.id;
+		const RETURNED_QUESTIONS = data.questions;
+
+		RETURNED_QUESTIONS ? console.log('load question script') : console.log('dont load it');
 
 		// these are our event listeners for things we want to track
 		window.addEventListener("scroll", usableScrolling);
@@ -104,12 +108,12 @@ function browser() {
 
 	return browser.prototype._cachedResult =
 		isOpera ? 'Opera' :
-		isFirefox ? 'Firefox' :
-		isSafari ? 'Safari' :
-		isChrome ? 'Chrome' :
-		isIE ? 'IE' :
-		isEdge ? 'Edge' :
-		"Don't know";
+			isFirefox ? 'Firefox' :
+				isSafari ? 'Safari' :
+					isChrome ? 'Chrome' :
+						isIE ? 'IE' :
+							isEdge ? 'Edge' :
+								"Don't know";
 };
 
 // changing the x/y coords anytime that the mouse is moved
