@@ -5,6 +5,7 @@ const {
 
 const websiteStorage = new Schema({
 	testArray: Array,
+	questions: Array,
 	createdAt: {
 		type: Date,
 		default: Date.now
