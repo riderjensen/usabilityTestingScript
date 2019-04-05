@@ -38,5 +38,10 @@ genButton.addEventListener('click', () => {
 });
 
 addQuestions.addEventListener('click', () => {
-	document.getElementById('questionArea').innerHTML += '<input class="form-control" value="" /><br />';
+	const input = document.createElement('input');
+	input.setAttribute('class', 'form-control');
+	input.setAttribute('value', '');
+	const br = document.createElement('br');
+	document.getElementById('questionArea').appendChild(input);
+	document.getElementById('questionArea').appendChild(br);
 });
