@@ -6,6 +6,7 @@ exports.index = (req, res, next) => {
 
 exports.generate = (req, res, next) => {
 	const newWeb = new WebsiteStorageModel();
+	req.body.questionArray ? newWeb.questions = req.body.questionArray : null;
 	newWeb.save().then(item => {
 		res.send({
 			url: `${process.env.ADDR}/js?id=${item._id}`
