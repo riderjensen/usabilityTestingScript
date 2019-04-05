@@ -551,3 +551,7 @@ p#passwordReqs {
   background: #42dca3; /* Gecko Browsers */
   color: #000;
 }
+
+.text-center{
+	text-align: center;
+}
