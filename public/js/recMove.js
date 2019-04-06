@@ -196,60 +196,6 @@ function usableScrolling() {
 
 
 function createModalArea(questionsArray, testId) {
-	createModal();
-
-	const taskList = questionsArray[getRandomInt(0, questionsArray.length)];
-	document.getElementById('taskItem').textContent = taskList;
-
-	// Minimize and Maximize Modal
-	const minMaxButtonEvent = document.getElementById('minMaxButton');
-	minMaxButtonEvent.addEventListener('click', () => {
-		if (minMaxSpan.textContent === '-') {
-			outerDiv.style.cssText = 'width: 500px; height: auto; border: 1px solid #ccc; box-sizing: border-box; border-radius: 10px; position: fixed; bottom: 40px; transition: .3s linear; z-index: 99; left: -502px; background: #fff;';
-			minMaxSpan.textContent = '+';
-		} else {
-			outerDiv.style.cssText = 'width: 500px; height: auto; border: 1px solid #ccc; box-sizing: border-box; border-radius: 10px; position: fixed; bottom: 40px; transition: .3s linear; z-index: 99; left: 0; background: #fff;';
-			minMaxSpan.textContent = '-';
-		}
-	});
-
-	minMaxButtonEvent.onmouseover = () => {
-		minMaxButtonEvent.style.cssText = 'background: cyan; height: 100%; width: 100%; border-radius: 50px; display: flex; justify-content: center; align-items: center; transform: scale(1.1); transition: .2s; cursor: pointer;';
-	};
-
-	minMaxButtonEvent.onmouseleave = () => {
-		minMaxButtonEvent.style.cssText = 'background: cyan; height: 100%; width: 100%; border-radius: 50px; display: flex; justify-content: center; align-items: center; transform: scale(1); transition: .2s;';
-	};
-
-	// Next Button
-	nextButton.addEventListener('mouseover', (e) => {
-		e.target.style.cssText = 'flex-grow: 1; padding: 10px; text-decoration: none; font-family: sans-serif; text-align: center; background: cyan; color: #fff; border-radius: 0 0 10px 0; cursor: pointer;';
-	});
-
-	nextButton.addEventListener('click', () => {
-		let feedbackGet = document.getElementById('usableUserResponseTextArea').value;
-		const questionObj = {
-			question: taskList,
-			answer: feedbackGet,
-			testId: testId
-		};
-		console.log(questionObj);
-		//post feedbackGet to DB
-		postData(`${USABLE_URL}/answerQuestion`, questionObj)
-			.then(data => {
-				console.log('Answer question should be sent to the DB')
-			})
-
-	});
-}
-
-function getRandomInt(min, max) {
-	min = Math.ceil(min);
-	max = Math.floor(max);
-	return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
-
-function createModal() {
 	// Create outer div
 	const outerDiv = document.createElement('div');
 	outerDiv.setAttribute('id', 'taskModal');
@@ -319,4 +265,55 @@ function createModal() {
 
 	// Append Entire Modal to Body
 	document.querySelector('body').appendChild(outerDiv);
+
+	const taskList = questionsArray[getRandomInt(0, questionsArray.length)];
+	document.getElementById('taskItem').textContent = taskList;
+
+	// Minimize and Maximize Modal
+	const minMaxButtonEvent = document.getElementById('minMaxButton');
+	minMaxButtonEvent.addEventListener('click', () => {
+		if (minMaxSpan.textContent === '-') {
+			outerDiv.style.cssText = 'width: 500px; height: auto; border: 1px solid #ccc; box-sizing: border-box; border-radius: 10px; position: fixed; bottom: 40px; transition: .3s linear; z-index: 99; left: -502px; background: #fff;';
+			minMaxSpan.textContent = '+';
+		} else {
+			outerDiv.style.cssText = 'width: 500px; height: auto; border: 1px solid #ccc; box-sizing: border-box; border-radius: 10px; position: fixed; bottom: 40px; transition: .3s linear; z-index: 99; left: 0; background: #fff;';
+			minMaxSpan.textContent = '-';
+		}
+	});
+
+	minMaxButtonEvent.onmouseover = () => {
+		minMaxButtonEvent.style.cssText = 'background: cyan; height: 100%; width: 100%; border-radius: 50px; display: flex; justify-content: center; align-items: center; transform: scale(1.1); transition: .2s; cursor: pointer;';
+	};
+
+	minMaxButtonEvent.onmouseleave = () => {
+		minMaxButtonEvent.style.cssText = 'background: cyan; height: 100%; width: 100%; border-radius: 50px; display: flex; justify-content: center; align-items: center; transform: scale(1); transition: .2s;';
+	};
+
+	// Next Button
+	nextButton.addEventListener('mouseover', (e) => {
+		e.target.style.cssText = 'flex-grow: 1; padding: 10px; text-decoration: none; font-family: sans-serif; text-align: center; background: cyan; color: #fff; border-radius: 0 0 10px 0; cursor: pointer;';
+	});
+
+	nextButton.addEventListener('click', () => {
+		let feedbackGet = document.getElementById('usableUserResponseTextArea').value;
+		const questionObj = {
+			question: taskList,
+			answer: feedbackGet,
+			testId: testId
+		};
+		//post feedbackGet to DB
+		postData(`${USABLE_URL}/answerQuestion`, questionObj)
+			.then(data => {
+				console.log(data)
+				//remove the modal from the DOM
+				outerDiv.remove();
+			})
+
+	});
+}
+
+function getRandomInt(min, max) {
+	min = Math.ceil(min);
+	max = Math.floor(max);
+	return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
