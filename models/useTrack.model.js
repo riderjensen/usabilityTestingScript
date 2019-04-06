@@ -17,6 +17,7 @@ const useTrack = new Schema({
 			}
 		}
 	},
+	questionsAnswered: Object,
 	createdAt: {
 		type: Date,
 		default: Date.now
