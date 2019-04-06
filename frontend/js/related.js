@@ -1,4 +1,5 @@
-const OURURL = 'http://165.22.130.92/replay/findOne/'
+const USABLE_URL = 'http://165.22.130.92'
+const OURURL = `${USABLE_URL}/replay/findOne/`
 
 const genButton = document.getElementById('getTests');
 const genInput = document.getElementById('scriptId');
@@ -8,10 +9,10 @@ const listInfo = document.getElementById('listInfo');
 genButton.addEventListener('click', () => {
 	// check to make sure item is not empty here THEN
 	fetch(`http://165.22.130.92/replay/${genInput.value}`, {
-		method: "GET",
-		mode: "cors",
-		cache: "no-cache",
-	}).then(response => response.json())
+			method: "GET",
+			mode: "cors",
+			cache: "no-cache",
+		}).then(response => response.json())
 		.then(resp => {
 			// display list of all tests as clickable to http://localhost:8080/replay/findOne/${resp[i]}
 			let textGen = `<p>A total of ${resp.tests.length} tests have been generated. Click an ID to generate a test review:</p>

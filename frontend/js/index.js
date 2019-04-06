@@ -1,3 +1,5 @@
+const USABLE_URL = 'http://165.22.130.92'
+
 const genButton = document.getElementById('genScriptTag');
 const genInput = document.getElementById('scriptTag');
 const addQuestions = document.getElementById('addQuestions');
@@ -26,7 +28,7 @@ genButton.addEventListener('click', () => {
 		},
 		body: JSON.stringify(bodyObj)
 	} : null;
-	fetch('http://localhost:8080', queryItems).then(response => response.json())
+	fetch(`${USABLE_URL}`, queryItems).then(response => response.json())
 		.then(resp => {
 			genInput.value = `<script src="${resp.url}" id="usable"></script>`;
 			genInput.addEventListener('click', () => {

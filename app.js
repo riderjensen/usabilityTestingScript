@@ -33,6 +33,3 @@ mongoose.connect('mongodb+srv://scrimscram:12345678Ah!@nodecourse-zfafv.mongodb.
 	app.listen(PORT, () => console.log(`App is running on ${PORT}`));
 
 }).catch(err => console.log(`Cant connect to the DB because ${err}`))
-
-// run db 
-// mongod --dbpath "C:\Program Files\MongoDB\data"

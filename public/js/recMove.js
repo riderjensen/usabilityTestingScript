@@ -1,7 +1,7 @@
 const w = window.innerWidth;
 const h = window.innerHeight;
 const body = document.getElementsByTagName('body')[0];
-const USABLE_URL = 'http://localhost:8080';
+const USABLE_URL = 'http://165.22.130.92';
 
 let x, y;
 let objectArray = [];
