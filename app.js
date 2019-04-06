@@ -19,7 +19,10 @@ const jsRouter = require('./routes/js.route')();
 app.use('/js', jsRouter);
 
 const replayRouter = require('./routes/replay.route')();
-app.use('/replay', replayRouter)
+app.use('/replay', replayRouter);
+
+const answerQuestion = require('./routes/answerQuestion.route')();
+app.use('/answerQuestion', answerQuestion);
 
 const homeRouter = require('./routes/home.route')();
 app.use('/', homeRouter);
@@ -31,5 +34,5 @@ mongoose.connect('mongodb+srv://scrimscram:12345678Ah!@nodecourse-zfafv.mongodb.
 
 }).catch(err => console.log(`Cant connect to the DB because ${err}`))
 
-	// run db 
-    // mongod --dbpath "C:\Program Files\MongoDB\data"
+// run db 
+// mongod --dbpath "C:\Program Files\MongoDB\data"
