@@ -21,7 +21,7 @@ postData(`${USABLE_URL}/js`, initInformation)
 		const RETURNED_ID = data.id;
 		const RETURNED_QUESTIONS = data.questions;
 
-		RETURNED_QUESTIONS ? createModalArea(RETURNED_QUESTIONS, RETURNED_ID) : null;
+		RETURNED_QUESTIONS.length > 0 ? createModalArea(RETURNED_QUESTIONS, RETURNED_ID) : null;
 
 		// these are our event listeners for things we want to track
 		window.addEventListener("scroll", usableScrolling);
