@@ -1,4 +1,4 @@
-const usableURL = 'http://165.22.130.92'
+const usableURL = 'https://intense-plains-47179.herokuapp.com'
 
 // creating pointer and clicker
 const usableBody = document.getElementsByTagName('body')[0];

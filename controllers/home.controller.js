@@ -9,7 +9,7 @@ exports.generate = (req, res, next) => {
 	req.body.questionArray ? newWeb.questions = req.body.questionArray : null;
 	newWeb.save().then(item => {
 		res.send({
-			url: `${process.env.ADDR}/js?id=${item._id}`
+			url: `https://intense-plains-47179.herokuapp.com/js?id=${item._id}`
 		});
 	})
 		.catch(err => console.log(err))

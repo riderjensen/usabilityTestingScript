@@ -1,7 +1,7 @@
 const w = window.innerWidth;
 const h = window.innerHeight;
 const body = document.getElementsByTagName('body')[0];
-const USABLE_URL = 'http://165.22.130.92';
+const USABLE_URL = 'https://intense-plains-47179.herokuapp.com';
 
 let x, y;
 let objectArray = [];
