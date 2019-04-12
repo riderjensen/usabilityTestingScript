@@ -35,7 +35,7 @@ postData(`${USABLE_URL}/js`, initInformation)
 
 		setInterval(function () {
 			let object = screenPercents();
-			if (objectArray.length > 100) {
+			if (objectArray.length > 50) {
 				let sendObj = {
 					recMoves: objectArray,
 				};
