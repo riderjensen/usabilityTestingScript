@@ -5,7 +5,7 @@ exports.findingTests = (req, res, next) => {
 	const id = req.params.id;
 	WebsiteStorageModel.findById(id)
 		.then(item => {
-			res.send({
+			!item ? res.status(500).send({ err: 'Cant find item'}) : res.send({
 				"tests": item.testArray
 			})
 		})
