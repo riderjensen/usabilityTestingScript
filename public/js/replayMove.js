@@ -123,17 +123,9 @@ getData(`${usableURL}/replay/findOne/`, theID).then(item => {
 		if (typeof userMoves[i].ev === "object") {
 			let ourObject = userMoves[i].ev;
 			if (ourObject.type == 'start') {
-				let ourTime = (scrollIndexArray[j + 1] - scrollIndexArray[j]) / (interval / 10);
 				let ourObj = userMoves[scrollIndexArray[j + 1]].ev;
-
 				scrollOnPage = ourObj.eScroll;
-				TweenLite.to(window, ourTime, {
-					scrollTo: {
-						y: ourObj.eScroll,
-						x: 0
-					},
-					ease: Power2.easeInOut
-				});
+                window.scrollTo(0, ourObj.eScroll);
 				j += 2;
 			}
 
